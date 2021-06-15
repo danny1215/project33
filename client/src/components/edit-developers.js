@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 
-export default class CreateDevelopers extends Component {
+export default class EditTodo extends Component {
+
     constructor(props) {
         super(props);
 
         this.onChangeDeveFirst_Name = this.onChangeDeveFirst_Name.bind(this);
         this.onChangeDeveLast_name = this.onChangeDeveLast_name.bind(this);
         this.onChangeDeveRole = this.onChangeDeveRole.bind(this);
+        this.onChangeJob_completed = this.onChangeJob_completed.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
 
         this.state = {
@@ -16,6 +19,22 @@ export default class CreateDevelopers extends Component {
             Job_completed: false
         }
     }
+
+    componentDidMount() {
+        axios.get('http://localhost:4000/todos/'+this.props.match.params.id)
+            .then(response => {
+                this.setState({
+                    DeveFirst_Name: response.data.DeveFirst_Name,
+                    DeveLast_name: response.data.DeveLast_name,
+                    DeveRole: response.data.DeveRole,
+                    Job_completed: response.data.Job_completed
+                })   
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+    }
+
 
     onChangeDeveFirst_Name(e) {
         this.setState({
@@ -35,29 +54,35 @@ export default class CreateDevelopers extends Component {
         });
     }
 
+
+    onChangeJob_completed(e) {
+        this.setState({
+            Job_completed: !this.state.Job_completed
+        });
+    }
+
     onSubmit(e) {
         e.preventDefault();
+        const obj = {
+            DeveFirst_Name: this.state.DeveFirst_Name,
+            DeveLast_name: this.state.DeveLast_name,
+            DeveRole: this.state.DeveRole,
+            Job_completed: this.state.Job_completed
+        };
+        console.log(obj);
+        axios.post('http://localhost:3001/developer/update/'+this.props.match.params.id, obj)
+            .then(res => console.log(res.data));
         
-        console.log(`Form submitted:`);
-        console.log(`DeveFirst_Name: ${this.state.DeveFirst_Name}`);
-        console.log(`DeveLast_name: ${this.state.DeveLast_name}`);
-        console.log(`DeveRole: ${this.state.DeveRole}`);
-        
-        this.setState({
-            DeveFirst_Name: '',
-            DeveLast_name: '',
-            DeveRole: '',
-            Job_completed: false
-        })
+        this.props.history.push('/');
     }
 
     render() {
         return (
-            <div style={{marginTop: 10}}>
-                <h3>Create Developers</h3>
+            <div>
+                <h3 align="center">Update Developer</h3>
                 <form onSubmit={this.onSubmit}>
                     <div className="form-group"> 
-                        <label>First_Name: </label>
+                        <label>First Name: </label>
                         <input  type="text"
                                 className="form-control"
                                 value={this.state.DeveFirst_Name}
@@ -65,7 +90,7 @@ export default class CreateDevelopers extends Component {
                                 />
                     </div>
                     <div className="form-group">
-                        <label>Last_Name: </label>
+                        <label>Last Name: </label>
                         <input 
                                 type="text" 
                                 className="form-control"
@@ -83,7 +108,7 @@ export default class CreateDevelopers extends Component {
                                     checked={this.state.DeveRole==='Developer'} 
                                     onChange={this.onChangeDeveRole}
                                     />
-                            <label className="form-check-label">DEVELOPER</label>
+                            <label className="form-check-label">Developer</label>
                         </div>
                         <div className="form-check form-check-inline">
                             <input  className="form-check-input" 
@@ -94,12 +119,27 @@ export default class CreateDevelopers extends Component {
                                     checked={this.state.DeveRole==='Manager'} 
                                     onChange={this.onChangeDeveRole}
                                     />
-                            <label className="form-check-label">MANAGER</label>
+                            <label className="form-check-label">Manager</label>
                         </div>
                     </div>
+                    <div className="form-check">
+                        <input  className="form-check-input"
+                                id="completedCheckbox"
+                                type="checkbox"
+                                name="completedCheckbox"
+                                onChange={this.onChangeJob_completed}
+                                checked={this.state.Job_completed}
+                                value={this.state.Job_completed}
+                                />
+                        <label className="form-check-label" htmlFor="completedCheckbox">
+                            Completed
+                        </label>                        
+                    </div>
+
+                    <br />
 
                     <div className="form-group">
-                        <input type="submit" value="Create Todo" className="btn btn-primary" />
+                        <input type="submit" value="Update Developer" className="btn btn-primary" />
                     </div>
                 </form>
             </div>
