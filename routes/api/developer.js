@@ -2,15 +2,7 @@ const developerRoutes = require("express").Router();
 const DeveloperModel = require("../../models/Developer");
 
 
-// developerRoutes.get("/api/developer", async (request, response) => {
-//   const developer = await DeveloperModel.find({});
 
-//   try {
-//     response.send(developer);
-//   } catch (error) {
-//     response.status(500).send(error);
-//   }
-// });
 
 
 developerRoutes.route('/').get(function(req, res) {
@@ -55,6 +47,24 @@ developerRoutes.route('/update/:id').post(function(req, res) {
 });
 
 
+
+developerRoutes.route("/delete/:id").delete(function(req, res)  {
+    DeveloperModel.findByIdAndRemove(req.params.id, function(err, developer) {
+        if (!developer)
+        
+            res.status(404).send("data is not found");
+        else
+  
+        developer.remove().then(developer => {
+                res.json('developer deleted!');
+            })
+            .catch(err => {
+                res.status(400).send("deletion not possible");
+            });
+    });
+  });
+
+
 developerRoutes.route('/add').post(function(req, res) {
   let developer = new DeveloperModel(req.body);
   developer.save()
@@ -69,52 +79,7 @@ developerRoutes.route('/add').post(function(req, res) {
 
 
 
-// router.get("/api/developer/:id", async (request, response) => {
-//   const developer = await DeveloperModel.findbyid({});
 
-//   try {
-//     response.send(developer);
-//   } catch (error) {
-//     response.status(500).send(error);
-//   }
-// });
-
-
-
-// router.post("/api/developer", async (request, response) => {
-//   const developer = new DeveloperModel(request.body);
-
-//   try {
-//     await developer.save();
-//     response.send(developer);
-//   } catch (error) {
-//     response.status(500).send("nothing here");
-//   }
-// });
-
-// router.patch("/api/developer/:id", async (request, response) => {
-//   try {
-//     await DeveloperModel.findByIdAndUpdate(request.params.id, request.body);
-//     await DeveloperModel.save();
-//     response.send(developer);
-//   } catch (error) {
-//     response.status(500).send(error);
-//   }
-// });
-
-
-
-
-// router.delete("/api/developers/:id", async (request, response) => {
-//   try {
-//     const developer = await developerModel.findByIdAndDelete(request.params.id);
-
-//     if (!developer) response.status(404).send("No item found");
-//     response.status(200).send("deleted");
-//   } catch (error) {
-//     response.status(500).send(error);
-//   }
-// });
 
 
 module.exports = developerRoutes;

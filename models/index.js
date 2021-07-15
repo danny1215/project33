@@ -1,5 +1,6 @@
 module.exports = {
-    Developer: require("./Developer")
+    Developer: require("./Developer"),
+    Project: require("./Project")
     
   };
   

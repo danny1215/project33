@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
-export default class EditDeveloper extends Component {
+export default class DeleteDeveloper extends Component {
 
     constructor(props) {
         super(props);
@@ -25,11 +25,8 @@ export default class EditDeveloper extends Component {
             .then(response => {
                 this.setState({
                     DeveFirst_Name: response.data.DeveFirst_Name,
-
                     DeveLast_name: response.data.DeveLast_name,
-
                     DeveRole: response.data.DeveRole,
-                    
                     Job_completed: response.data.Job_completed
                 })   
             })
@@ -73,7 +70,7 @@ export default class EditDeveloper extends Component {
             Job_completed: this.state.Job_completed
         };
         console.log(obj);
-        axios.post('http://localhost:3001/developer/update/'+this.props.match.params.id, obj)
+        axios.delete('http://localhost:3001/developer/delete/'+this.props.match.params.id, obj)
             .then(res => console.log(res.data));
         
         this.props.history.push('/');
@@ -82,7 +79,7 @@ export default class EditDeveloper extends Component {
     render() {
         return (
             <div>
-                <h3 align="center">Update Developer</h3>
+                <h3 align="center">ARE YOU SURE YOU WANT TO Delete Developer ?</h3>
                 <form onSubmit={this.onSubmit}>
                     <div className="form-group"> 
                         <label>First Name: </label>
@@ -142,7 +139,7 @@ export default class EditDeveloper extends Component {
                     <br />
 
                     <div className="form-group">
-                        <input type="submit" value="Update Developer" className="btn btn-primary" />
+                        <input type="submit" value="Delete Developer" className="btn btn-primary" />
                     </div>
                     
                 </form>

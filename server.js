@@ -3,6 +3,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 
 const DeveloperRouter = require("./routes/api/developer");
+const ProjectRouter = require("./routes/api/project")
 const app = express();
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -34,6 +35,7 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/project33",
 );
 // app.use(DeveloperRouter);
 app.use('/developer', DeveloperRouter);
+app.use('/project', ProjectRouter);
 // app.use(require("./routes/api/employee"));
 
 // Start the API server

@@ -10,6 +10,9 @@ const Developer = props => (
         <td>
             <Link to={"/edit/"+props.developer._id}>Edit</Link>
         </td>
+        <td>
+            <Link to={"/delete/"+props.developer._id}>DELETE</Link>
+        </td>
     </tr>
 )
 
