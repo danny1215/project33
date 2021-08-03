@@ -24,7 +24,7 @@ if (process.env.NODE_ENV === "production") {
 
 
 // Connect to the Mongo DB
-mongoose.connect(process.env.MONGODB_URI || "mongodb+srv://projectadmin@admin:projectadmin@cluster0.svmel.mongodb.net/project33?retryWrites=true&w=majority",
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/project33",
 { 
   useNewUrlParser: true, 
   useUnifiedTopology: true,
