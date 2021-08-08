@@ -19,7 +19,7 @@ class App extends Component {
     return (
       <Router>
         <div className="container">
-          <nav className="navbar navbar-expand-lg navbar-light bg-light" bg="transparent" expand="lg">
+          <nav variant="pills" className="navbar navbar-expand-lg navbar-primary bg-light" bg="transparent" expand="lg">
             <a className="navbar-brand" href="" target="_blank">
               {/* <img src={logo} width="30" height="30" alt="" /> */}
             </a>

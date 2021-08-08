@@ -43,7 +43,7 @@ export default class DeveloperList extends Component {
         return (
             <div>
                 <h3>Developer List</h3>
-                <table className="table table-striped" style={{ marginTop: 20 }} >
+                <table className="table table-striped " style={{ marginTop: 20 }} >
                     <thead>
                         <tr>
                             <th>First Name</th>
